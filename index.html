@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anno Design Studio</title>
+<meta name="description" content="Anno Design Studio. Interior design for homes, cafés and workplaces: projects, drawings and films.">
+<meta property="og:title" content="Anno Design Studio">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23ECEEE8'/%3E%3Cpath d='M16 56V30a16 16 0 0 1 32 0v26z' fill='%231B2420'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Outfit:wght@200..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout idea: a left-aligned studio page. One giant lowercase wordmark whose two n's echo the
+     single arch that frames the latest project; the archive is filed by year, read as "anno 2026".
+     The arch is the only curve on the page; everything else is square and quiet so the work leads. */
+  --plaster:#ECEEE8;       /* page: cool limewash */
+  --plaster-deep:#DDE1D8;  /* image wells, placeholders */
+  --surface:#F8F9F5;       /* dialogs, drawing paper */
+  --ink:#1B2420;           /* text: green-black */
+  --moss:#56625A;          /* secondary text */
+  --rule:#C6CBC1;          /* hairlines */
+  --marigold:#E2A416;      /* the one highlight: active states, owner actions */
+  --danger:#9E2F1C;
+  --display:"Outfit","Avenir Next","Century Gothic",Futura,system-ui,sans-serif;
+  --text:"Newsreader","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --gutter:clamp(16px,4vw,48px);
+  --max:1320px;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--plaster);color:var(--ink);font-family:var(--display);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body.has-ownerbar{padding-bottom:84px}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{text-wrap:balance}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 5px var(--marigold)}
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--plaster);padding:10px 14px;z-index:50}
+.skip:focus{left:8px}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px;padding-block:20px}
+.brand{font-weight:500;text-decoration:none}
+.top nav{display:flex;gap:clamp(18px,3vw,36px)}
+.top nav a{text-decoration:none;padding-block:6px;border-bottom:2px solid transparent}
+.top nav a:hover{border-bottom-color:var(--marigold)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(36px,6vw,64px);align-items:end;padding-block:clamp(28px,5vw,56px) clamp(56px,9vw,120px)}
+.wordmark{margin:0;font-weight:200}
+.wm-anno{display:block;font-size:clamp(112px,33vw,290px);line-height:.74;letter-spacing:-.04em;margin-left:-.05em}
+.wm-rest{display:block;font-size:clamp(24px,6.2vw,48px);font-weight:300;line-height:1;letter-spacing:-.01em;margin-top:.6em}
+.tagline{font-family:var(--text);font-size:clamp(19px,2.2vw,24px);line-height:1.4;max-width:30ch;margin:clamp(24px,4vw,40px) 0 0;text-wrap:balance}
+.arch{margin:0}
+.arch-frame{display:block;position:relative;aspect-ratio:3/4;border-radius:999px 999px 0 0;overflow:hidden;background:var(--plaster-deep)}
+.arch-frame img,.arch-frame video{width:100%;height:100%;object-fit:cover}
+.arch-note{position:absolute;left:0;right:0;bottom:0;margin:0;padding:28px 24px;text-align:center;color:var(--moss)}
+.arch figcaption{margin-top:12px;font-size:15px;color:var(--moss)}
+.arch figcaption a{color:var(--ink);text-underline-offset:4px}
+@media (min-width:860px){
+  .hero{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+  .wm-anno{font-size:clamp(150px,21vw,340px)}
+  .wm-rest{font-size:clamp(28px,3.4vw,52px)}
+}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .intro .arch-frame{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{clip-path:inset(34% 0 0 0 round 999px 999px 0 0)}to{clip-path:inset(0 0 0 0 round 999px 999px 0 0)}}
+}
+
+/* sections */
+.section{padding-block:clamp(56px,9vw,120px);border-top:1px solid var(--rule)}
+.section-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px 32px;margin-bottom:clamp(36px,5vw,64px)}
+.section-title{font-weight:300;font-size:clamp(40px,7vw,76px);line-height:1;letter-spacing:-.02em;margin:0}
+.filters{display:flex;flex-wrap:wrap;gap:0 22px}
+.filters button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 0;cursor:pointer;color:var(--moss)}
+.filters button[aria-pressed="true"]{color:var(--ink);font-weight:500;border-bottom-color:var(--marigold)}
+.notice{margin:0 0 clamp(28px,4vw,48px);padding:14px 16px;background:var(--surface);border-left:4px solid var(--marigold);max-width:70ch}
+.state-note{margin:0;color:var(--moss);font-family:var(--text);font-size:20px;max-width:46ch}
+.linkbtn{background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+
+/* archive by year */
+.year + .year{margin-top:clamp(56px,8vw,112px)}
+.year-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 14px;margin:0 0 clamp(22px,3vw,40px);padding-bottom:clamp(12px,1.6vw,20px);border-bottom:1px solid var(--ink);font-weight:200}
+.yh-anno{font-size:clamp(20px,2.6vw,30px);font-weight:300}
+.yh-num{font-size:clamp(76px,15vw,176px);line-height:.78;letter-spacing:-.045em;font-variant-numeric:tabular-nums lining-nums}
+.yh-count{margin-left:auto;font-size:15px;font-weight:400;color:var(--moss)}
+.tiles{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(36px,4vw,56px) clamp(16px,3vw,40px);grid-auto-flow:dense}
+.tile{display:flex;flex-direction:column;text-decoration:none;min-width:0}
+.tile-media{display:block;position:relative;flex:1 1 auto;aspect-ratio:4/5;background:var(--plaster-deep);overflow:hidden;margin-bottom:14px}
+.tile.wide .tile-media{aspect-ratio:8/5}
+.tile-media img,.tile-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile-media.is-drawing{background:var(--surface)}
+.tile-title{font-size:clamp(20px,2.1vw,26px);line-height:1.2;text-decoration:underline 2px transparent;text-underline-offset:7px}
+.tile:hover .tile-title{text-decoration-color:var(--marigold)}
+.tile-meta{color:var(--moss);font-size:15px;margin-top:4px}
+.badge{position:absolute;left:12px;bottom:12px;background:var(--ink);color:var(--plaster);font-size:13px;padding:4px 10px}
+.tag{display:inline-block;background:var(--marigold);color:var(--ink);font-size:13px;font-weight:500;padding:3px 9px}
+.tile-media .tag{position:absolute;left:12px;top:12px}
+.ghost{display:block;aspect-ratio:4/5;background:var(--plaster-deep)}
+@media (min-width:600px){
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tile.wide{grid-column:span 2}
+}
+@media (min-width:960px){
+  .tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* project */
+.project{padding-block:clamp(8px,2vw,24px) clamp(56px,9vw,120px)}
+.project-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
+.back{text-underline-offset:4px}
+.owner-actions{display:flex;flex-wrap:wrap;gap:10px}
+.project h1{font-weight:300;font-size:clamp(44px,9vw,108px);line-height:.95;letter-spacing:-.03em;margin:clamp(28px,5vw,56px) 0 clamp(24px,4vw,44px)}
+.project h1 .tag{vertical-align:middle;letter-spacing:0;margin-left:.6em}
+.titleblock{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border-block:1px solid var(--ink);margin:0}
+.titleblock > div{background:var(--plaster);padding:14px 16px 16px 0}
+.titleblock > div:nth-child(even){padding-left:16px}
+.titleblock > div:last-child:nth-child(odd){grid-column:1 / -1}
+.titleblock dt{font-size:13px;color:var(--moss)}
+.titleblock dd{margin:2px 0 0;font-size:18px;overflow-wrap:anywhere}
+@media (min-width:720px){
+  .titleblock{grid-template-columns:repeat(var(--n,4),minmax(0,1fr))}
+  .titleblock > div,.titleblock > div:nth-child(even){padding-left:16px}
+  .titleblock > div:first-child{padding-left:0}
+  .titleblock > div:last-child:nth-child(odd){grid-column:auto}
+}
+.prose{font-family:var(--text);font-size:clamp(18px,1.7vw,21px);line-height:1.55;max-width:62ch}
+.prose p{margin:0 0 1em}
+.prose p:last-child{margin-bottom:0}
+.project .prose{margin-top:clamp(24px,4vw,44px)}
+.media-flow{display:grid;gap:clamp(16px,3vw,40px);margin-top:clamp(36px,6vw,72px)}
+.row{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(16px,3vw,40px);align-items:start}
+.row figure{margin:0;min-width:0}
+.row figure.solo-portrait{max-width:760px}
+.shot{display:block;width:100%;padding:0;border:0;background:var(--plaster-deep);cursor:zoom-in}
+.shot.is-drawing{background:var(--surface)}
+.shot img{width:100%;height:auto}
+.row video{width:100%;height:auto;background:var(--ink)}
+.row figcaption{font-size:15px;color:var(--moss);margin-top:10px;max-width:60ch}
+@media (min-width:600px){.row.pair{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.next{margin-top:clamp(56px,9vw,112px);padding-top:24px;border-top:1px solid var(--ink)}
+.next a{display:inline-block;text-decoration:none}
+.next small{display:block;color:var(--moss);font-size:15px}
+.next strong{font-weight:300;font-size:clamp(32px,6vw,64px);line-height:1.05;letter-spacing:-.02em;text-decoration:underline 2px transparent;text-underline-offset:8px}
+.next a:hover strong{text-decoration-color:var(--marigold)}
+
+/* studio and contact */
+.studio-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(36px,6vw,80px)}
+@media (min-width:860px){.studio-grid{grid-template-columns:minmax(0,7fr) minmax(0,4fr)}}
+.studio .prose{font-size:clamp(20px,2.2vw,26px);line-height:1.45;max-width:36ch}
+.sub{font-weight:500;font-size:16px;margin:0 0 12px}
+.services{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.services li{padding:12px 0;border-bottom:1px solid var(--rule);font-size:18px}
+.contact-lede{font-family:var(--text);font-size:clamp(20px,2.2vw,26px);line-height:1.4;margin:0 0 clamp(24px,4vw,40px);max-width:30ch}
+.contact-list{display:grid;grid-template-columns:minmax(0,1fr);margin:0;border-top:1px solid var(--ink);max-width:820px}
+.contact-list > div{display:grid;grid-template-columns:minmax(0,1fr);gap:2px 24px;padding:16px 0;border-bottom:1px solid var(--rule)}
+@media (min-width:600px){.contact-list > div{grid-template-columns:160px minmax(0,1fr)}}
+.contact-list dt{color:var(--moss);font-size:15px;padding-top:4px}
+.contact-list dd{margin:0;font-size:clamp(20px,2.4vw,26px);font-weight:300;overflow-wrap:anywhere;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;white-space:pre-line}
+.contact-list dd a{text-underline-offset:5px;text-decoration-thickness:1px}
+.copybtn{font-size:14px;font-weight:400;border:1px solid var(--rule);background:transparent;padding:6px 12px;cursor:pointer;border-radius:2px}
+
+/* footer */
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding-block:28px 36px;border-top:1px solid var(--rule);font-size:15px;color:var(--moss)}
+.foot p{margin:0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid var(--ink);border-radius:2px;background:transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn.primary{background:var(--ink);color:var(--plaster)}
+.btn.danger{border-color:var(--danger);color:var(--danger)}
+.btn.danger.solid{background:var(--danger);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+
+/* owner bar */
+.ownerbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:12px var(--gutter);background:var(--ink);color:var(--plaster)}
+.ownerbar .who{margin-right:auto;font-size:15px}
+.ownerbar .btn{border-color:var(--plaster);color:var(--plaster)}
+.ownerbar .btn.primary{background:var(--marigold);border-color:var(--marigold);color:var(--ink);font-weight:500}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;max-width:calc(100% - 32px);background:var(--ink);color:var(--plaster);padding:12px 18px;border-radius:2px;border-left:4px solid var(--marigold)}
+
+body.has-ownerbar .toast{bottom:92px}
+@media (max-width:519px){
+  .ownerbar .who{display:none}
+  .ownerbar .btn{flex:1 1 0;padding:0 10px}
+  .sheet-foot .btn{flex:1 1 0}
+}
+
+/* dialogs */
+dialog{border:0;padding:0;color:var(--ink);background:var(--surface)}
+dialog::backdrop{background:rgba(27,36,32,.55)}
+.sheet{width:min(680px,100%);max-width:100%;height:100%;max-height:100%;margin:0 0 0 auto}
+.sheet form{display:flex;flex-direction:column;height:100%}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 20px;border-bottom:1px solid var(--rule)}
+.sheet-head h2{margin:0;font-weight:400;font-size:24px}
+.sheet-body{flex:1 1 auto;overflow:auto;padding:20px}
+.sheet-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px 12px;padding:14px 20px;border-top:1px solid var(--rule)}
+.sheet-foot .status{flex:1 1 100%;min-width:0;font-size:15px;color:var(--moss)}
+.sheet-foot .status p{margin:0 0 6px}
+.plain{border:0;margin:0;padding:0;min-width:0;display:grid;gap:22px}
+.field{display:grid;gap:6px;min-width:0}
+.field label,.plain legend{font-size:15px;font-weight:500;padding:0}
+.plain legend{margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+input[type=text],input[type=number],input[type=email],input[type=tel],input[type=password],textarea,select{width:100%;font-size:16px;padding:11px 12px;border:1px solid var(--rule);border-radius:2px;background:#fff}
+textarea{resize:vertical;line-height:1.45}
+.hint{margin:0;font-size:14px;color:var(--moss)}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--ink)}
+.error{margin:0;padding:12px 14px;border-left:4px solid var(--danger);background:#fff;color:var(--danger)}
+.media-list{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:10px}
+.media-item{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:12px;align-items:start;padding:10px;border:1px solid var(--rule);background:#fff}
+.thumb{position:relative;width:72px;height:72px;background:var(--plaster-deep);overflow:hidden}
+.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}
+.cover-flag{position:absolute;left:0;bottom:0;background:var(--marigold);font-size:12px;font-weight:500;padding:1px 6px}
+.media-fields{display:grid;gap:8px;min-width:0}
+.media-fields select,.media-fields input{padding:8px 10px}
+.kind-fixed{margin:0;padding:8px 0;font-size:15px;color:var(--moss)}
+.media-actions{display:grid;gap:4px}
+.media-actions button{width:36px;height:30px;border:1px solid var(--rule);background:transparent;border-radius:2px;cursor:pointer;line-height:1}
+.media-actions button:disabled{opacity:.35;cursor:default}
+.filepick{align-self:start;justify-self:start}
+input.visually-hidden:focus-visible + .filepick{outline:2px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 5px var(--marigold)}
+progress{width:100%;height:6px;accent-color:var(--ink)}
+.small{width:min(460px,calc(100% - 32px));padding:24px}
+.small h2{margin:0 0 10px;font-weight:400;font-size:24px}
+.small p{margin:0 0 12px}
+.small .actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;margin-top:20px}
+
+/* lightbox */
+.lightbox{width:100%;height:100%;max-width:100%;max-height:100%;background:rgba(18,24,21,.97);color:var(--plaster)}
+.lightbox[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+.lb-top,.lb-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 16px}
+.lb-bottom{justify-content:center;gap:28px}
+.lb-stage{display:flex;align-items:center;justify-content:center;min-height:0;padding:0 8px}
+.lb-stage img{max-width:100%;max-height:100%;object-fit:contain}
+.lb-btn{background:none;border:1px solid rgba(236,238,232,.5);color:var(--plaster);min-height:44px;padding:0 16px;border-radius:2px;cursor:pointer}
+.lb-btn:disabled{opacity:.35;cursor:default}
+.lb-cap{margin:0;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.lb-count{font-variant-numeric:tabular-nums;min-width:5ch;text-align:center}
+.lightbox :focus-visible{outline-color:var(--plaster)}
+</style>
+</head>
+<body>
+<a class="skip" href="#home" data-action="skip">Skip to content</a>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#home">Anno Design Studio</a>
+    <nav aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#studio">Studio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  <main id="main" tabindex="-1"></main>
+  <footer class="foot">
+    <p>© <span id="foot-year"></span> Anno Design Studio</p>
+    <p id="owner-entry"></p>
+  </footer>
+</div>
+
+<div id="ownerbar" class="ownerbar" role="region" aria-label="Owner tools" hidden>
+  <span class="who">Signed in as owner</span>
+  <button type="button" class="btn" data-action="edit-site">Studio details</button>
+  <button type="button" class="btn primary" data-action="new-post">Add project</button>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<dialog id="post-dialog" class="sheet" aria-labelledby="post-dialog-title">
+  <form id="post-form" novalidate>
+    <div class="sheet-head">
+      <h2 id="post-dialog-title">Add project</h2>
+      <button type="button" class="linkbtn" data-action="close-dialog">Close</button>
+    </div>
+    <div class="sheet-body">
+      <fieldset class="plain" id="post-fields">
+        <div class="field">
+          <label for="post-title">Project name</label>
+          <input type="text" id="post-title" maxlength="140" autocomplete="off" required>
+        </div>
+        <fieldset class="plain" style="gap:0">
+          <legend>Photos, videos and illustrations</legend>
+          <ul class="media-list" id="media-list"></ul>
+          <input class="visually-hidden" type="file" id="post-files" multiple accept="image/*,video/mp4,video/webm,video/quicktime,.mov,.m4v">
+          <label class="btn filepick" for="post-files">Choose files</label>
+          <p class="hint" style="margin-top:10px">JPG, PNG, WebP, GIF or SVG images, and MP4, MOV or WebM videos up to 50 MB each. The first item is the cover. Large photos are resized before upload.</p>
+        </fieldset>
+        <div class="grid2">
+          <div class="field">
+            <label for="post-type">Type</label>
+            <input type="text" id="post-type" maxlength="80" list="post-types" placeholder="Residential">
+            <datalist id="post-types"><option value="Residential"><option value="Hospitality"><option value="Workplace"><option value="Retail"><option value="Furniture"><option value="Concept"></datalist>
+          </div>
+          <div class="field">
+            <label for="post-year">Year</label>
+            <input type="number" id="post-year" min="1900" max="2100" step="1" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="post-location">Location</label>
+            <input type="text" id="post-location" maxlength="120" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="post-area">Area</label>
+            <input type="text" id="post-area" maxlength="60" placeholder="2,400 sq ft" autocomplete="off">
+          </div>
+        </div>
+        <div class="field">
+          <label for="post-description">Description</label>
+          <textarea id="post-description" rows="5" maxlength="6000"></textarea>
+        </div>
+        <label class="check" for="post-featured"><input type="checkbox" id="post-featured"> <span>Show this project in the arch at the top of the home page</span></label>
+      </fieldset>
+      <p class="error" id="post-error" role="alert" hidden style="margin-top:20px"></p>
+    </div>
+    <div class="sheet-foot">
+      <div class="status" id="post-status-wrap" hidden>
+        <p id="post-status" aria-live="polite"></p>
+        <progress id="post-progress" max="100" value="0" hidden></progress>
+      </div>
+      <button type="button" class="btn" data-action="close-dialog" id="post-cancel">Cancel</button>
+      <button type="submit" class="btn primary" id="post-submit">Publish</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="site-dialog" class="sheet" aria-labelledby="site-dialog-title">
+  <form id="site-form" novalidate>
+    <div class="sheet-head">
+      <h2 id="site-dialog-title">Studio details</h2>
+      <button type="button" class="linkbtn" data-action="close-dialog">Close</button>
+    </div>
+    <div class="sheet-body">
+      <fieldset class="plain" id="site-fields">
+        <div class="field">
+          <label for="site-tagline">Opening line</label>
+          <textarea id="site-tagline" rows="2" maxlength="300"></textarea>
+          <p class="hint">Shown under the studio name on the home page.</p>
+        </div>
+        <div class="field">
+          <label for="site-about">About the studio</label>
+          <textarea id="site-about" rows="7" maxlength="4000"></textarea>
+          <p class="hint">Leave a blank line between paragraphs.</p>
+        </div>
+        <div class="field">
+          <label for="site-services">What the studio does</label>
+          <textarea id="site-services" rows="6" maxlength="2400"></textarea>
+          <p class="hint">One service per line.</p>
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <label for="site-email">Email</label>
+            <input type="email" id="site-email" maxlength="200" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="site-phone">Phone</label>
+            <input type="tel" id="site-phone" maxlength="60" autocomplete="off">
+          </div>
+        </div>
+        <div class="field">
+          <label for="site-address">Studio address</label>
+          <textarea id="site-address" rows="2" maxlength="400"></textarea>
+        </div>
+        <div class="field">
+          <label for="site-instagram">Instagram username</label>
+          <input type="text" id="site-instagram" maxlength="80" placeholder="annodesignstudio" autocomplete="off">
+        </div>
+      </fieldset>
+      <p class="error" id="site-error" role="alert" hidden style="margin-top:20px"></p>
+    </div>
+    <div class="sheet-foot">
+      <button type="button" class="btn" data-action="close-dialog">Cancel</button>
+      <button type="submit" class="btn primary" id="site-submit">Save details</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="confirm-dialog" class="small" aria-labelledby="confirm-title">
+  <h2 id="confirm-title"></h2>
+  <p id="confirm-body"></p>
+  <div class="actions">
+    <button type="button" class="btn" data-action="confirm-no">Cancel</button>
+    <button type="button" class="btn danger solid" data-action="confirm-yes" id="confirm-yes">Delete</button>
+  </div>
+</dialog>
+
+<dialog id="login-dialog" class="small" aria-labelledby="login-title">
+  <form id="login-form" novalidate>
+    <h2 id="login-title">Owner sign in</h2>
+    <div class="field">
+      <label for="login-email">Email</label>
+      <input type="email" id="login-email" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <label for="login-password">Password</label>
+      <input type="password" id="login-password" autocomplete="current-password" required>
+    </div>
+    <p class="error" id="login-error" role="alert" hidden style="margin-top:16px"></p>
+    <div class="actions">
+      <button type="button" class="btn" data-action="close-dialog">Cancel</button>
+      <button type="submit" class="btn primary" id="login-submit">Sign in</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="lightbox" class="lightbox" aria-label="Image viewer">
+  <div class="lb-top">
+    <p class="lb-cap" id="lb-cap"></p>
+    <button type="button" class="lb-btn" data-action="lb-close">Close</button>
+  </div>
+  <div class="lb-stage" id="lb-stage"><img id="lb-img" alt=""></div>
+  <div class="lb-bottom">
+    <button type="button" class="lb-btn" data-action="lb-prev" id="lb-prev">Previous</button>
+    <span class="lb-count" id="lb-count"></span>
+    <button type="button" class="lb-btn" data-action="lb-next" id="lb-next">Next</button>
+  </div>
+</dialog>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+'use strict';
+
+/* ---------- helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+const uid = () => Math.random().toString(36).slice(2, 10);
+const THIS_YEAR = new Date().getFullYear();
+const MB = 1024 * 1024;
+const KIND = {
+  photo: { label: 'Photo', plural: 'photos' },
+  video: { label: 'Video', plural: 'videos' },
+  illustration: { label: 'Illustration', plural: 'illustrations' }
+};
+const ASSET_ID = /^(?!.*\.\.)[A-Za-z0-9._\/-]{6,200}$/;
+const POST_ID = /^[A-Za-z0-9-]{1,80}$/;
+/* ---------- connection (the two values come from config.js) ---------- */
+const CFG = window.ANNO_CONFIG || {};
+const SB_URL = String(CFG.supabaseUrl || '').trim().replace(/\/+$/, '');
+const SB_KEY = String(CFG.supabaseKey || '').trim();
+const BUCKET = 'media';
+const configured = /^https:\/\/[A-Za-z0-9.-]+$/.test(SB_URL) && SB_KEY.length > 20;
+const sb = configured && window.supabase && typeof window.supabase.createClient === 'function'
+  ? window.supabase.createClient(SB_URL, SB_KEY) : null;
+const blobUrl = id => SB_URL + '/storage/v1/object/public/' + BUCKET + '/' + id.split('/').map(encodeURIComponent).join('/');
+const postRow = (id, b) => ({
+  id, title: b.title, type: b.type, location: b.location, year: b.year, area: b.area, description: b.description,
+  featured: b.featured, media: b.media, created_at: new Date(b.createdAt).toISOString(), updated_at: new Date(b.updatedAt).toISOString()
+});
+const siteRow = b => ({
+  id: 1, tagline: b.tagline, about: b.about, services: b.services, email: b.email, phone: b.phone,
+  address: b.address, instagram: b.instagram, updated_at: new Date(b.updatedAt).toISOString()
+});
+const rowToSnap = r => ({
+  id: r.id, exists: true,
+  data: () => ({ title: r.title, type: r.type, location: r.location, year: r.year, area: r.area, description: r.description,
+    featured: r.featured, media: r.media, createdAt: Date.parse(r.created_at) || 0 })
+});
+const dim = v => (Number.isFinite(v) && v > 0 && v < 100000 ? Math.round(v) : 0);
+const userErr = msg => Object.assign(new Error(msg), { user: true });
+
+/* ---------- state ---------- */
+const state = {
+  owner: false,
+  posts: [], postsState: 'loading', stale: false,   // loading | ready | slow | error | off
+  site: normSite({}), filter: 'all',
+  postsJson: '', siteJson: ''
+};
+
+/* ---------- data shapes (everything read from the store is treated as untrusted) ---------- */
+function normMedia(m) {
+  if (!m || typeof m !== 'object' || typeof m.id !== 'string' || !ASSET_ID.test(m.id)) return null;
+  const out = { id: m.id, kind: KIND[m.kind] ? m.kind : 'photo', caption: str(m.caption, 300), w: dim(m.w), h: dim(m.h) };
+  if (typeof m.poster === 'string' && ASSET_ID.test(m.poster)) out.poster = m.poster;
+  return out;
+}
+function normPost(snap) {
+  const d = snap && snap.exists !== false && typeof snap.data === 'function' ? snap.data() : null;
+  if (!d || !POST_ID.test(snap.id)) return null;
+  const createdAt = Number.isFinite(d.createdAt) ? d.createdAt : 0;
+  let year = parseInt(d.year, 10);
+  if (!(year >= 1900 && year <= 2100)) year = createdAt ? new Date(createdAt).getFullYear() : THIS_YEAR;
+  return {
+    id: snap.id,
+    title: str(d.title, 140) || 'Untitled project',
+    type: str(d.type, 80), location: str(d.location, 120), area: str(d.area, 60),
+    year, description: str(d.description, 6000),
+    featured: d.featured === true, sample: d.sample === true,
+    media: (Array.isArray(d.media) ? d.media : []).map(normMedia).filter(Boolean).slice(0, 60),
+    createdAt
+  };
+}
+function normSite(d) {
+  d = d && typeof d === 'object' ? d : {};
+  return {
+    tagline: str(d.tagline, 300), about: str(d.about, 4000),
+    services: (Array.isArray(d.services) ? d.services : []).map(s => str(s, 120)).filter(Boolean).slice(0, 24),
+    email: str(d.email, 200), phone: str(d.phone, 60), address: str(d.address, 400), instagram: str(d.instagram, 80)
+  };
+}
+const byRecent = (a, b) => b.year - a.year || b.createdAt - a.createdAt || a.title.localeCompare(b.title);
+const findPost = id => state.posts.find(p => p.id === id) || null;
+function featuredPost() {
+  const withMedia = state.posts.filter(p => p.media.length);
+  return withMedia.find(p => p.featured) || withMedia[0] || null;
+}
+function coverOf(p, kind) {
+  if (kind && kind !== 'all') return p.media.find(m => m.kind === kind) || null;
+  return p.media[0] || null;
+}
+const isLandscape = m => !!m && m.w > m.h * 1.15;
+const isPortrait = m => !!m && m.kind !== 'video' && m.h > m.w * 1.05;
+
+/* ---------- routing ---------- */
+function parseRoute() {
+  const h = location.hash.replace(/^#/, '');
+  if (h.startsWith('project-') && POST_ID.test(h.slice(8))) return { view: 'project', id: h.slice(8) };
+  return { view: 'home', section: ['work', 'studio', 'contact'].includes(h) ? h : null };
+}
+function onRoute() {
+  closeLightbox();
+  render();
+  const r = parseRoute();
+  if (r.view === 'home' && r.section) {
+    const el = document.getElementById(r.section);
+    if (el) el.scrollIntoView();
+  } else {
+    toTop();
+  }
+}
+function toTop() {
+  try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch (e) { window.scrollTo(0, 0); }
+}
+
+/* ---------- view pieces ---------- */
+function stillHtml(m, alt, eager) {
+  if (!m) return '';
+  const load = eager ? '' : ' loading="lazy"';
+  if (m.kind === 'video') {
+    if (m.poster) return `<img src="${blobUrl(m.poster)}" alt="${esc(alt)}"${load} decoding="async">`;
+    return `<video src="${blobUrl(m.id)}#t=0.1" muted playsinline preload="metadata"></video>`;
+  }
+  return `<img src="${blobUrl(m.id)}" alt="${esc(alt)}"${load} decoding="async">`;
+}
+function paragraphs(text) {
+  return text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
+    .map(p => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('');
+}
+
+function heroHtml() {
+  const s = state.site;
+  const feat = featuredPost();
+  const cover = feat ? coverOf(feat) : null;
+  let arch;
+  if (cover) {
+    arch = `<a class="arch-frame" href="#project-${feat.id}" aria-label="Open ${esc(feat.title)}">${stillHtml(cover, '', true)}</a>
+      <figcaption>${feat.featured ? 'Featured' : 'Latest'} project: <a href="#project-${feat.id}">${esc(feat.title)}</a>, ${feat.year}</figcaption>`;
+  } else {
+    const note = state.owner && state.postsState === 'ready' ? '<p class="arch-note">Your latest project will show here.</p>' : '';
+    arch = `<div class="arch-frame">${note}</div>`;
+  }
+  let tagline = '';
+  if (s.tagline) tagline = `<p class="tagline">${esc(s.tagline)}</p>`;
+  else if (state.owner) tagline = `<p class="tagline"><button type="button" class="linkbtn" data-action="edit-site">Add an opening line</button></p>`;
+  return `<section class="hero" id="home">
+    <div class="hero-type">
+      <h1 class="wordmark" aria-label="Anno Design Studio"><span class="wm-anno" aria-hidden="true">anno</span><span class="wm-rest" aria-hidden="true">design studio</span></h1>
+      ${tagline}
+    </div>
+    <figure class="arch">${arch}</figure>
+  </section>`;
+}
+
+function tileHtml(p) {
+  const cover = coverOf(p, state.filter);
+  const wide = isLandscape(cover) || (cover && cover.kind === 'video' && !isPortraitVideo(cover));
+  const drawing = cover && cover.kind === 'illustration';
+  const meta = [p.type, p.location].filter(Boolean).join(', ');
+  return `<a class="tile${wide ? ' wide' : ''}" href="#project-${p.id}">
+    <span class="tile-media${drawing ? ' is-drawing' : ''}">${stillHtml(cover, '', false)}${cover && cover.kind === 'video' ? '<span class="badge">Video</span>' : ''}${p.sample ? '<span class="tag">Sample</span>' : ''}</span>
+    <span class="tile-title">${esc(p.title)}</span>
+    ${meta ? `<span class="tile-meta">${esc(meta)}</span>` : ''}
+  </a>`;
+}
+const isPortraitVideo = m => m.h > m.w;
+
+function workBody() {
+  const st = state.postsState;
+  if (st === 'loading') return `<div class="tiles" aria-hidden="true"><span class="ghost"></span><span class="ghost"></span><span class="ghost"></span></div><p class="visually-hidden">Loading the work</p>`;
+  if (st === 'slow') return `<p class="state-note">The work can’t be reached yet. It will appear here as soon as the connection comes back.</p>`;
+  if (st === 'error') return `<p class="state-note">The work can’t be loaded right now. Try again in a little while.</p>`;
+  if (st === 'off') return `<p class="state-note">This site isn’t connected to its database yet. Add the project address and key to config.js; LAUNCH.md has the steps.</p>`;
+  const all = state.posts;
+  if (!all.length) {
+    return state.owner
+      ? `<p class="state-note">Nothing posted yet. <button type="button" class="linkbtn" data-action="new-post">Add your first project</button></p>`
+      : `<p class="state-note">New work is on its way. Check back soon.</p>`;
+  }
+  const f = state.filter;
+  const list = f === 'all' ? all : all.filter(p => p.media.some(m => m.kind === f));
+  let out = '';
+  if (state.stale) out += `<p class="notice">Showing a saved copy of the work. It may be out of date.</p>`;
+  if (state.owner && all.some(p => p.sample)) {
+    out += `<p class="notice">The projects marked Sample show how your posts will look. <button type="button" class="linkbtn" data-action="remove-samples">Remove the samples</button></p>`;
+  }
+  if (!list.length) return out + `<p class="state-note">No ${KIND[f].plural} posted yet.</p>`;
+  const groups = new Map();
+  for (const p of list) { if (!groups.has(p.year)) groups.set(p.year, []); groups.get(p.year).push(p); }
+  for (const [year, posts] of groups) {
+    out += `<section class="year" aria-labelledby="y-${year}">
+      <h3 class="year-head" id="y-${year}"><span class="yh-anno">anno</span><span class="yh-num">${year}</span><span class="yh-count">${posts.length} ${posts.length === 1 ? 'project' : 'projects'}</span></h3>
+      <div class="tiles">${posts.map(tileHtml).join('')}</div>
+    </section>`;
+  }
+  return out;
+}
+
+function filtersHtml() {
+  const opts = [['all', 'All'], ['photo', 'Photos'], ['video', 'Videos'], ['illustration', 'Illustrations']];
+  return `<div class="filters" role="group" aria-label="Show">${opts.map(([v, l]) =>
+    `<button type="button" data-action="filter" data-filter="${v}" aria-pressed="${state.filter === v}">${l}</button>`).join('')}</div>`;
+}
+
+function studioHtml() {
+  const s = state.site;
+  const about = s.about ? paragraphs(s.about) : '<p>Anno Design Studio is an interior design studio.</p>';
+  const services = s.services.length
+    ? `<div><h3 class="sub">What we do</h3><ul class="services">${s.services.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  const edit = state.owner ? `<button type="button" class="btn" data-action="edit-site">Edit studio details</button>` : '';
+  return `<section class="section studio" id="studio">
+    <div class="section-head"><h2 class="section-title">Studio</h2>${edit}</div>
+    <div class="studio-grid"><div class="prose">${about}</div>${services}</div>
+  </section>`;
+}
+
+function contactHtml() {
+  const s = state.site;
+  const rows = [];
+  if (s.email) {
+    const ok = /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(s.email);
+    rows.push(`<div><dt>Email</dt><dd>${ok ? `<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>` : esc(s.email)}<button type="button" class="copybtn" data-action="copy" data-copy="${esc(s.email)}">Copy</button></dd></div>`);
+  }
+  if (s.phone) {
+    const tel = s.phone.replace(/[^\d+]/g, '');
+    rows.push(`<div><dt>Phone</dt><dd>${tel.length >= 6 ? `<a href="tel:${esc(tel)}">${esc(s.phone)}</a>` : esc(s.phone)}<button type="button" class="copybtn" data-action="copy" data-copy="${esc(s.phone)}">Copy</button></dd></div>`);
+  }
+  if (s.address) rows.push(`<div><dt>Studio</dt><dd>${esc(s.address)}</dd></div>`);
+  if (s.instagram) {
+    const handle = s.instagram.replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/^@/, '').replace(/\/.*$/, '');
+    if (/^[A-Za-z0-9._]{1,30}$/.test(handle)) rows.push(`<div><dt>Instagram</dt><dd><a href="https://www.instagram.com/${esc(handle)}/">@${esc(handle)}</a></dd></div>`);
+  }
+  let body;
+  if (rows.length) body = `<p class="contact-lede">Tell us about your space and what you’d like it to become.</p><dl class="contact-list">${rows.join('')}</dl>`;
+  else body = state.owner
+    ? `<p class="state-note">No contact details yet. <button type="button" class="linkbtn" data-action="edit-site">Add your email, phone and address</button></p>`
+    : `<p class="state-note">Contact details are on their way.</p>`;
+  return `<section class="section contact" id="contact">
+    <div class="section-head"><h2 class="section-title">Contact</h2></div>
+    ${body}
+  </section>`;
+}
+
+function homeView() {
+  return `${heroHtml()}
+  <section class="section work" id="work">
+    <div class="section-head"><h2 class="section-title">Work</h2>${filtersHtml()}</div>
+    <div id="work-body">${workBody()}</div>
+  </section>
+  ${studioHtml()}
+  ${contactHtml()}`;
+}
+
+function mediaRows(media) {
+  const rows = [];
+  for (let i = 0; i < media.length; i++) {
+    if (isPortrait(media[i]) && isPortrait(media[i + 1])) { rows.push([i, i + 1]); i++; }
+    else rows.push([i]);
+  }
+  return rows;
+}
+function lightboxList(p) {
+  return p.media.filter(m => m.kind !== 'video').map(m => ({ id: m.id, caption: m.caption, alt: m.caption || p.title }));
+}
+
+function projectView(id) {
+  const st = state.postsState;
+  const back = `<a class="back" href="#work">Back to all work</a>`;
+  if (st === 'loading') return `<article class="project"><div class="project-bar">${back}</div><p class="state-note" style="margin-top:40px">Loading the project</p></article>`;
+  const p = findPost(id);
+  if (!p) {
+    const msg = st === 'ready' ? 'This project isn’t on the site any more.' : 'This project can’t be loaded right now.';
+    return `<article class="project"><div class="project-bar">${back}</div><p class="state-note" style="margin-top:40px">${msg}</p></article>`;
+  }
+  const facts = [['Type', p.type], ['Location', p.location], ['Year', String(p.year)], ['Area', p.area]].filter(f => f[1]);
+  const owner = state.owner ? `<div class="owner-actions">
+      <button type="button" class="btn" data-action="edit-post" data-id="${p.id}">Edit project</button>
+      <button type="button" class="btn danger" data-action="delete-post" data-id="${p.id}">Delete</button>
+    </div>` : '';
+  let zoomIndex = 0;
+  const rows = mediaRows(p.media).map(idxs => {
+    const figs = idxs.map(i => {
+      const m = p.media[i];
+      const ratio = m.w && m.h ? ` style="aspect-ratio:${m.w}/${m.h}"` : '';
+      const cap = m.caption ? `<figcaption>${esc(m.caption)}</figcaption>` : '';
+      if (m.kind === 'video') {
+        const poster = m.poster ? ` poster="${blobUrl(m.poster)}"` : '';
+        return `<figure><video src="${blobUrl(m.id)}${m.poster ? '' : '#t=0.1'}" controls playsinline preload="metadata"${poster}${ratio}></video>${cap}</figure>`;
+      }
+      const z = zoomIndex++;
+      const alt = m.caption || `${p.title}, ${KIND[m.kind].label.toLowerCase()} ${z + 1}`;
+      const solo = idxs.length === 1 && isPortrait(m) ? ' class="solo-portrait"' : '';
+      return `<figure${solo}><button type="button" class="shot${m.kind === 'illustration' ? ' is-drawing' : ''}" data-action="zoom" data-index="${z}" aria-label="View larger: ${esc(alt)}"><img src="${blobUrl(m.id)}" alt="${esc(alt)}"${i > 1 ? ' loading="lazy"' : ''} decoding="async"${ratio}></button>${cap}</figure>`;
+    }).join('');
+    return `<div class="row${idxs.length === 2 ? ' pair' : ''}">${figs}</div>`;
+  }).join('');
+  const others = state.posts.filter(x => x.id !== p.id);
+  let next = '';
+  if (others.length) {
+    const i = state.posts.findIndex(x => x.id === p.id);
+    const n = state.posts[(i + 1) % state.posts.length];
+    next = `<nav class="next" aria-label="More work"><a href="#project-${n.id}"><small>Next project</small><strong>${esc(n.title)}</strong></a></nav>`;
+  }
+  return `<article class="project">
+    <div class="project-bar">${back}${owner}</div>
+    <h1>${esc(p.title)}${p.sample ? ' <span class="tag">Sample</span>' : ''}</h1>
+    ${facts.length ? `<dl class="titleblock" style="--n:${facts.length}">${facts.map(f => `<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>` : ''}
+    ${p.description ? `<div class="prose">${paragraphs(p.description)}</div>` : ''}
+    ${rows ? `<div class="media-flow">${rows}</div>` : ''}
+    ${next}
+  </article>`;
+}
+
+function render() {
+  const r = parseRoute();
+  $('#main').innerHTML = r.view === 'project' ? projectView(r.id) : homeView();
+  document.body.classList.toggle('has-ownerbar', state.owner);
+  $('#ownerbar').hidden = !state.owner;
+  $('#owner-entry').innerHTML = state.owner
+    ? 'Signed in as owner. <button type="button" class="linkbtn" data-action="sign-out">Sign out</button>'
+    : '<button type="button" class="linkbtn" data-action="owner-login">Owner sign in</button>';
+}
+
+/* ---------- small UI services ---------- */
+let toastTimer;
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.hidden = true; }, 3800);
+}
+let confirmResolve = null;
+function confirmDialog({ title, body, confirm }) {
+  const d = $('#confirm-dialog');
+  $('#confirm-title').textContent = title;
+  $('#confirm-body').textContent = body;
+  $('#confirm-yes').textContent = confirm;
+  return new Promise(res => { confirmResolve = res; d.showModal(); });
+}
+$('#confirm-dialog').addEventListener('close', () => { if (confirmResolve) { const r = confirmResolve; confirmResolve = null; r($('#confirm-dialog').returnValue === 'yes'); } });
+
+/* ---------- lightbox ---------- */
+const lb = { list: [], i: 0 };
+function openLightbox(i) {
+  const r = parseRoute(); const p = r.view === 'project' ? findPost(r.id) : null;
+  if (!p) return;
+  lb.list = lightboxList(p); lb.i = Math.max(0, Math.min(i, lb.list.length - 1));
+  if (!lb.list.length) return;
+  showLightbox();
+  const d = $('#lightbox'); if (!d.open) d.showModal();
+}
+function showLightbox() {
+  const it = lb.list[lb.i]; if (!it) return;
+  const img = $('#lb-img'); img.src = blobUrl(it.id); img.alt = it.alt;
+  $('#lb-cap').textContent = it.caption;
+  $('#lb-count').textContent = `${lb.i + 1} / ${lb.list.length}`;
+  $('#lb-prev').disabled = lb.i === 0;
+  $('#lb-next').disabled = lb.i === lb.list.length - 1;
+}
+function stepLightbox(d) { const n = lb.i + d; if (n >= 0 && n < lb.list.length) { lb.i = n; showLightbox(); } }
+function closeLightbox() { const d = $('#lightbox'); if (d.open) d.close(); }
+document.addEventListener('keydown', e => {
+  if (!$('#lightbox').open) return;
+  if (e.key === 'ArrowLeft') stepLightbox(-1);
+  if (e.key === 'ArrowRight') stepLightbox(1);
+});
+(() => {
+  let x0 = null;
+  const stage = $('#lb-stage');
+  stage.addEventListener('touchstart', e => { x0 = e.touches.length === 1 ? e.touches[0].clientX : null; }, { passive: true });
+  stage.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 48) stepLightbox(dx < 0 ? 1 : -1);
+  }, { passive: true });
+})();
+
+/* ---------- store helpers ---------- */
+const errText = e => String((e && (e.message || e.error_description || e.error)) || '');
+const errCode = e => String((e && (e.code || e.statusCode || e.status)) || '');
+const denied = e => ['42501', '401', '403'].includes(errCode(e)) || /row-level security|permission denied|unauthorized|not authorized|jwt/i.test(errText(e));
+async function writeDoc(fn) {
+  const res = await fn();
+  if (res && res.error) throw res.error;
+  return res;
+}
+function writeMessage(e) {
+  if (denied(e)) return 'This account isn’t allowed to change the site. Sign in as the owner and try again.';
+  return 'The change didn’t go through. Check your connection and try again.';
+}
+const EXT = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif', 'image/svg+xml': 'svg', 'video/mp4': 'mp4', 'video/webm': 'webm' };
+async function uploadAsset(blob, type, postId) {
+  const path = `${postId}/${uid()}${uid().slice(0, 4)}.${EXT[type] || 'bin'}`;
+  const { error } = await sb.storage.from(BUCKET).upload(path, blob, { contentType: type, cacheControl: '31536000', upsert: false });
+  if (error) throw error;
+  return { id: path };
+}
+function uploadMessage(e, name) {
+  if (e && e.user) return e.message;
+  const m = errText(e), c = errCode(e);
+  if (c === '413' || /maximum allowed size|too large|exceeded/i.test(m)) return `${name} is too large. Files can be up to 50 MB.`;
+  if (c === '415' || /mime type|not supported/i.test(m)) return `${name} is a file type the site can’t store. Use JPG, PNG, WebP, GIF or SVG images, and MP4 or WebM video.`;
+  if (denied(e)) return 'This account isn’t allowed to upload. Sign in as the owner and try again.';
+  return `${name} didn’t upload. Check your connection and try again.`;
+}
+async function deleteAssets(mediaList) {
+  const paths = [];
+  for (const m of mediaList) for (const id of [m.id, m.poster]) if (id) paths.push(id);
+  if (!paths.length || !sb) return;
+  try { await sb.storage.from(BUCKET).remove(paths); } catch (e) { /* the files stay in storage; nothing on the site points at them */ }
+}
+
+/* ---------- preparing files ---------- */
+function loadImage(url) {
+  return new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = () => rej(new Error('decode')); im.src = url; });
+}
+async function prepareImage(it) {
+  const f = it.file, name = f.name || 'This image';
+  let im;
+  try { im = await loadImage(it.url); }
+  catch (e) { throw userErr(`${name} couldn’t be read as an image. Use a JPG, PNG, WebP, GIF or SVG file.`); }
+  const w = im.naturalWidth, h = im.naturalHeight;
+  if (it.isSvg) return { blob: f, type: 'image/svg+xml', w, h };
+  if (f.type === 'image/gif') return { blob: f, type: 'image/gif', w, h };
+  const scale = Math.min(1, 2400 / Math.max(w, h, 1));
+  const png = f.type === 'image/png';
+  const direct = ['image/jpeg', 'image/png', 'image/webp'].includes(f.type);
+  if (direct && scale === 1 && (png || f.size <= 3 * MB)) return { blob: f, type: f.type, w, h };
+  const cw = Math.max(1, Math.round(w * scale)), ch = Math.max(1, Math.round(h * scale));
+  const c = document.createElement('canvas'); c.width = cw; c.height = ch;
+  const ctx = c.getContext('2d');
+  if (!png) { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cw, ch); }
+  ctx.drawImage(im, 0, 0, cw, ch);
+  const type = png ? 'image/png' : 'image/jpeg';
+  const blob = await new Promise(r => c.toBlob(r, type, 0.86));
+  if (!blob) throw userErr(`${name} couldn’t be prepared for upload. Try saving it as a JPG first.`);
+  return { blob, type, w: cw, h: ch };
+}
+function videoMeta(url) {
+  return new Promise(resolve => {
+    const v = document.createElement('video');
+    const out = { w: 0, h: 0, poster: null };
+    let done = false;
+    const finish = () => { if (done) return; done = true; clearTimeout(timer); try { v.removeAttribute('src'); v.load(); } catch (e) {} resolve(out); };
+    const timer = setTimeout(finish, 7000);
+    const capture = () => {
+      try {
+        if (!v.videoWidth) return finish();
+        const s = Math.min(1, 1600 / Math.max(v.videoWidth, v.videoHeight));
+        const c = document.createElement('canvas');
+        c.width = Math.round(v.videoWidth * s); c.height = Math.round(v.videoHeight * s);
+        c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+        c.toBlob(b => { out.poster = b || null; finish(); }, 'image/jpeg', 0.84);
+      } catch (e) { finish(); }
+    };
+    v.muted = true; v.playsInline = true; v.preload = 'auto';
+    v.addEventListener('loadedmetadata', () => {
+      out.w = v.videoWidth; out.h = v.videoHeight;
+      try { v.currentTime = Math.min(0.3, (v.duration || 1) / 2); } catch (e) { finish(); }
+    });
+    v.addEventListener('seeked', () => setTimeout(capture, 160));
+    v.addEventListener('error', finish);
+    v.src = url;
+  });
+}
+async function prepareVideo(it) {
+  const f = it.file;
+  const ext = ((f.name || '').split('.').pop() || '').toLowerCase();
+  const type = f.type === 'video/webm' || ext === 'webm' ? 'video/webm' : 'video/mp4';
+  const meta = await videoMeta(it.url);
+  return { blob: f, type, w: meta.w, h: meta.h, posterBlob: meta.poster };
+}
+
+/* ---------- project editor ---------- */
+const editor = { draft: null, saving: false };
+
+function showError(sel, msg) { const el = $(sel); el.textContent = msg || ''; el.hidden = !msg; }
+function setPostStatus(msg, pct) {
+  $('#post-status').textContent = msg || '';
+  $('#post-status-wrap').hidden = !msg;
+  const pr = $('#post-progress');
+  if (typeof pct === 'number') { pr.hidden = false; pr.value = pct; } else pr.hidden = true;
+}
+
+function openEditor(post) {
+  if (!state.owner) return;
+  editor.draft = {
+    id: post ? post.id : null,
+    createdAt: post ? post.createdAt : 0,
+    items: post ? post.media.map(m => ({ key: uid(), saved: true, id: m.id, kind: m.kind, caption: m.caption, w: m.w, h: m.h, poster: m.poster || '' })) : [],
+    removed: []
+  };
+  $('#post-dialog-title').textContent = post ? 'Edit project' : 'Add project';
+  $('#post-submit').textContent = post ? 'Save changes' : 'Publish';
+  $('#post-title').value = post ? post.title : '';
+  $('#post-type').value = post ? post.type : '';
+  $('#post-year').value = post ? post.year : THIS_YEAR;
+  $('#post-location').value = post ? post.location : '';
+  $('#post-area').value = post ? post.area : '';
+  $('#post-description').value = post ? post.description : '';
+  $('#post-featured').checked = post ? post.featured : false;
+  showError('#post-error', '');
+  setPostStatus('');
+  renderMediaList();
+  $('#post-dialog').showModal();
+}
+
+function addFiles(fileList) {
+  const d = editor.draft; if (!d) return;
+  const problems = [];
+  for (const f of Array.from(fileList)) {
+    const name = f.name || 'A file';
+    const ext = (name.includes('.') ? name.split('.').pop() : '').toLowerCase();
+    const isVideo = f.type.startsWith('video/') || ['mp4', 'webm', 'mov', 'm4v'].includes(ext);
+    const isImage = !isVideo && (f.type.startsWith('image/') || ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext));
+    if (!isVideo && !isImage) { problems.push(`${name} isn’t an image or a video.`); continue; }
+    if (isVideo) {
+      const okType = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-m4v'].includes(f.type) || ['mp4', 'webm', 'mov', 'm4v'].includes(ext);
+      if (!okType) { problems.push(`${name} is a video format the site can’t play. Use MP4, MOV or WebM.`); continue; }
+      if (f.size > 50 * MB) { problems.push(`${name} is ${Math.ceil(f.size / MB)} MB. Videos can be up to 50 MB, so trim or compress it first.`); continue; }
+    }
+    const isSvg = f.type === 'image/svg+xml' || ext === 'svg';
+    if (isSvg && f.size > 2 * MB) { problems.push(`${name} is over 2 MB, the limit for SVG files.`); continue; }
+    if (d.items.length >= 40) { problems.push('A project can hold up to 40 files.'); break; }
+    d.items.push({ key: uid(), saved: false, file: f, url: URL.createObjectURL(f), kind: isVideo ? 'video' : (isSvg ? 'illustration' : 'photo'), caption: '', isSvg });
+  }
+  showError('#post-error', problems.join(' '));
+  renderMediaList();
+}
+
+function renderMediaList() {
+  const d = editor.draft; if (!d) return;
+  const last = d.items.length - 1;
+  $('#media-list').innerHTML = d.items.map((it, i) => {
+    const isVid = it.kind === 'video';
+    let thumb;
+    if (it.saved) thumb = isVid && !it.poster ? `<video src="${blobUrl(it.id)}#t=0.1" muted playsinline preload="metadata"></video>` : `<img src="${blobUrl(isVid ? it.poster : it.id)}" alt="">`;
+    else thumb = isVid ? `<video src="${esc(it.url)}#t=0.1" muted playsinline preload="metadata"></video>` : `<img src="${esc(it.url)}" alt="">`;
+    const kindCtl = isVid
+      ? `<p class="kind-fixed">Video</p>`
+      : `<label class="visually-hidden" for="mk-${it.key}">Kind of image, item ${i + 1}</label>
+         <select id="mk-${it.key}" data-key="${it.key}" data-field="kind">
+           <option value="photo"${it.kind === 'photo' ? ' selected' : ''}>Photo</option>
+           <option value="illustration"${it.kind === 'illustration' ? ' selected' : ''}>Illustration</option>
+         </select>`;
+    return `<li class="media-item">
+      <div class="thumb">${thumb}${i === 0 ? '<span class="cover-flag">Cover</span>' : ''}</div>
+      <div class="media-fields">${kindCtl}
+        <label class="visually-hidden" for="mc-${it.key}">Caption, item ${i + 1}</label>
+        <input type="text" id="mc-${it.key}" data-key="${it.key}" data-field="caption" maxlength="300" placeholder="Caption (optional)" value="${esc(it.caption)}">
+      </div>
+      <div class="media-actions">
+        <button type="button" data-action="media-up" data-key="${it.key}" aria-label="Move item ${i + 1} up"${i === 0 ? ' disabled' : ''}>↑</button>
+        <button type="button" data-action="media-down" data-key="${it.key}" aria-label="Move item ${i + 1} down"${i === last ? ' disabled' : ''}>↓</button>
+        <button type="button" data-action="media-remove" data-key="${it.key}" aria-label="Remove item ${i + 1}">✕</button>
+      </div>
+    </li>`;
+  }).join('');
+}
+$('#media-list').addEventListener('input', e => {
+  const t = e.target, d = editor.draft;
+  if (!d || !t.dataset || !t.dataset.key) return;
+  const it = d.items.find(x => x.key === t.dataset.key);
+  if (!it) return;
+  if (t.dataset.field === 'caption') it.caption = t.value;
+  if (t.dataset.field === 'kind' && KIND[t.value] && t.value !== 'video') it.kind = t.value;
+});
+$('#post-files').addEventListener('change', e => { addFiles(e.target.files); e.target.value = ''; });
+
+function moveItem(key, delta) {
+  const d = editor.draft; if (!d || editor.saving) return;
+  const i = d.items.findIndex(x => x.key === key), j = i + delta;
+  if (i < 0 || j < 0 || j >= d.items.length) return;
+  [d.items[i], d.items[j]] = [d.items[j], d.items[i]];
+  renderMediaList();
+}
+function removeItem(key) {
+  const d = editor.draft; if (!d || editor.saving) return;
+  const i = d.items.findIndex(x => x.key === key); if (i < 0) return;
+  const [it] = d.items.splice(i, 1);
+  if (it.saved) d.removed.push({ id: it.id, poster: it.poster });
+  else URL.revokeObjectURL(it.url);
+  renderMediaList();
+}
+function newPostId(title) {
+  const slug = title.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40).replace(/-+$/g, '') || 'project';
+  return `${slug}-${uid().slice(0, 4)}`;
+}
+
+async function savePost(e) {
+  e.preventDefault();
+  const d = editor.draft;
+  if (!d || editor.saving) return;
+  const title = $('#post-title').value.trim();
+  const year = parseInt($('#post-year').value, 10);
+  if (!title) { showError('#post-error', 'Give the project a name.'); $('#post-title').focus(); return; }
+  if (!d.items.length) { showError('#post-error', 'Add at least one photo, video or illustration.'); return; }
+  if (!(year >= 1900 && year <= 2100)) { showError('#post-error', 'Enter the year as four digits, for example ' + THIS_YEAR + '.'); $('#post-year').focus(); return; }
+  const fresh = d.items.filter(it => !it.saved);
+  if (!sb || !state.owner) { showError('#post-error', 'Sign in as the owner to post.'); return; }
+  const id = d.id || newPostId(title);
+
+  editor.saving = true;
+  showError('#post-error', '');
+  $('#post-fields').disabled = true; $('#post-submit').disabled = true; $('#post-cancel').disabled = true;
+  const uploaded = [];
+  let current = '';
+  try {
+    const media = [];
+    let n = 0;
+    for (const it of d.items) {
+      if (it.saved) {
+        const m = { id: it.id, kind: it.kind, caption: it.caption.trim(), w: it.w, h: it.h };
+        if (it.poster) m.poster = it.poster;
+        media.push(m);
+        continue;
+      }
+      n++;
+      current = it.file.name || 'A file';
+      setPostStatus(`Uploading ${n} of ${fresh.length}`, Math.round(((n - 1) / fresh.length) * 100));
+      const prep = it.kind === 'video' ? await prepareVideo(it) : await prepareImage(it);
+      const res = await uploadAsset(prep.blob, prep.type, id);
+      uploaded.push({ id: res.id });
+      const m = { id: res.id, kind: it.kind, caption: it.caption.trim(), w: dim(prep.w), h: dim(prep.h) };
+      if (prep.posterBlob) {
+        try { const pr = await uploadAsset(prep.posterBlob, 'image/jpeg', id); uploaded.push({ id: pr.id }); m.poster = pr.id; }
+        catch (err) { /* the video still plays without a poster frame */ }
+      }
+      media.push(m);
+    }
+    setPostStatus(d.id ? 'Saving' : 'Publishing', 100);
+    current = '';
+    const now = Date.now();
+    const body = {
+      title, type: $('#post-type').value.trim(), location: $('#post-location').value.trim(),
+      year, area: $('#post-area').value.trim(), description: $('#post-description').value.trim(),
+      featured: $('#post-featured').checked, media,
+      createdAt: d.createdAt || now, updatedAt: now
+    };
+    await writeDoc(() => sb.from('posts').upsert(postRow(id, body)));
+    const removed = d.removed.slice();
+    const wasEdit = !!d.id;
+    // show the result straight away; the live subscription confirms it
+    const local = normPost({ id, exists: true, data: () => body });
+    if (local) { state.posts = state.posts.filter(p => p.id !== id).concat(local).sort(byRecent); state.postsJson = ''; }
+    editor.saving = false;
+    $('#post-dialog').close();
+    toast(wasEdit ? 'Saved' : 'Published');
+    if (location.hash === '#project-' + id) render(); else location.hash = 'project-' + id;
+    deleteAssets(removed);
+  } catch (err) {
+    await deleteAssets(uploaded);
+    showError('#post-error', current ? uploadMessage(err, current) : writeMessage(err));
+    setPostStatus('');
+  } finally {
+    editor.saving = false;
+    $('#post-fields').disabled = false; $('#post-submit').disabled = false; $('#post-cancel').disabled = false;
+  }
+}
+$('#post-form').addEventListener('submit', savePost);
+$('#post-dialog').addEventListener('cancel', e => { if (editor.saving) e.preventDefault(); });
+$('#post-dialog').addEventListener('close', () => {
+  const d = editor.draft;
+  if (d) d.items.forEach(it => { if (!it.saved) URL.revokeObjectURL(it.url); });
+  editor.draft = null;
+  $('#media-list').innerHTML = '';
+});
+
+async function deletePost(id) {
+  const p = findPost(id);
+  if (!p || !state.owner) return;
+  const ok = await confirmDialog({ title: `Delete “${p.title}”?`, body: 'This removes the project and its files from the site. It can’t be undone.', confirm: 'Delete project' });
+  if (!ok) return;
+  try {
+    await writeDoc(() => sb.from('posts').delete().eq('id', id));
+    state.posts = state.posts.filter(x => x.id !== id); state.postsJson = '';
+    toast('Deleted');
+    if (location.hash === '#work') render(); else location.hash = 'work';
+    deleteAssets(p.media);
+  } catch (e) { toast(writeMessage(e)); }
+}
+async function removeSamples() {
+  const samples = state.posts.filter(p => p.sample);
+  if (!samples.length || !state.owner) return;
+  const ok = await confirmDialog({ title: 'Remove the sample projects?', body: `This deletes ${samples.length === 1 ? 'the sample project' : 'all ' + samples.length + ' sample projects'} and their files. Your own projects stay.`, confirm: 'Remove samples' });
+  if (!ok) return;
+  try {
+    for (const p of samples) {
+      await writeDoc(() => sb.from('posts').delete().eq('id', p.id));
+      state.posts = state.posts.filter(x => x.id !== p.id);
+    }
+    state.postsJson = '';
+    render();
+    toast('Samples removed');
+    for (const p of samples) await deleteAssets(p.media);
+  } catch (e) { state.postsJson = ''; render(); toast(writeMessage(e)); }
+}
+
+/* ---------- studio details editor ---------- */
+let siteSaving = false;
+function openSiteEditor() {
+  if (!state.owner) return;
+  const s = state.site;
+  $('#site-tagline').value = s.tagline;
+  $('#site-about').value = s.about;
+  $('#site-services').value = s.services.join('\n');
+  $('#site-email').value = s.email;
+  $('#site-phone').value = s.phone;
+  $('#site-address').value = s.address;
+  $('#site-instagram').value = s.instagram;
+  showError('#site-error', '');
+  $('#site-dialog').showModal();
+}
+async function saveSite(e) {
+  e.preventDefault();
+  if (siteSaving || !sb) return;
+  const email = $('#site-email').value.trim();
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('#site-error', 'Check the email address. It should look like name@example.com.'); $('#site-email').focus(); return; }
+  const body = {
+    tagline: $('#site-tagline').value.trim(),
+    about: $('#site-about').value.trim(),
+    services: $('#site-services').value.split('\n').map(x => x.trim()).filter(Boolean).slice(0, 24),
+    email, phone: $('#site-phone').value.trim(),
+    address: $('#site-address').value.trim(),
+    instagram: $('#site-instagram').value.trim(),
+    updatedAt: Date.now()
+  };
+  siteSaving = true; $('#site-submit').disabled = true; showError('#site-error', '');
+  try {
+    await writeDoc(() => sb.from('site_details').upsert(siteRow(body)));
+    state.site = normSite(body); state.siteJson = '';
+    $('#site-dialog').close();
+    render();
+    toast('Saved');
+  } catch (err) { showError('#site-error', writeMessage(err)); }
+  finally { siteSaving = false; $('#site-submit').disabled = false; }
+}
+$('#site-form').addEventListener('submit', saveSite);
+
+/* ---------- actions ---------- */
+const actions = {
+  'skip'(t, e) { e.preventDefault(); const m = $('#main'); m.focus(); m.scrollIntoView(); },
+  'filter'(t) {
+    state.filter = KIND[t.dataset.filter] ? t.dataset.filter : 'all';
+    document.querySelectorAll('.filters button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === state.filter)));
+    const wb = $('#work-body'); if (wb) wb.innerHTML = workBody();
+  },
+  'new-post'() { openEditor(null); },
+  'edit-post'(t) { const p = findPost(t.dataset.id); if (p) openEditor(p); },
+  'delete-post'(t) { deletePost(t.dataset.id); },
+  'remove-samples'() { removeSamples(); },
+  'edit-site'() { openSiteEditor(); },
+  'owner-login'() { openLogin(); },
+  'sign-out'() { signOut(); },
+  'close-dialog'(t) { const d = t.closest('dialog'); if (d && !(d.id === 'post-dialog' && editor.saving)) d.close(); },
+  'confirm-yes'() { $('#confirm-dialog').close('yes'); },
+  'confirm-no'() { $('#confirm-dialog').close('no'); },
+  'media-up'(t) { moveItem(t.dataset.key, -1); },
+  'media-down'(t) { moveItem(t.dataset.key, 1); },
+  'media-remove'(t) { removeItem(t.dataset.key); },
+  'zoom'(t) { openLightbox(parseInt(t.dataset.index, 10) || 0); },
+  'lb-prev'() { stepLightbox(-1); },
+  'lb-next'() { stepLightbox(1); },
+  'lb-close'() { closeLightbox(); },
+  'copy'(t) {
+    const text = t.dataset.copy || '';
+    const fail = () => toast('Copying didn’t work here. Press and hold the text to copy it.');
+    try { navigator.clipboard.writeText(text).then(() => toast('Copied'), fail); } catch (e) { fail(); }
+  }
+};
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-action]');
+  if (!t) return;
+  const fn = actions[t.dataset.action];
+  if (fn) fn(t, e);
+});
+
+/* ---------- owner sign-in ---------- */
+let signingIn = false;
+function openLogin() {
+  showError('#login-error', sb ? '' : 'The site isn’t connected to its database yet, so sign-in is off.');
+  $('#login-dialog').showModal();
+}
+async function refreshOwner() {
+  state.owner = false;
+  if (!sb) return;
+  try {
+    const { data } = await sb.auth.getSession();
+    if (!data || !data.session) return;
+    const res = await sb.rpc('is_site_admin');
+    state.owner = !res.error && res.data === true;
+  } catch (e) { state.owner = false; }
+}
+async function signIn(e) {
+  e.preventDefault();
+  if (signingIn || !sb) return;
+  const email = $('#login-email').value.trim(), password = $('#login-password').value;
+  if (!email || !password) { showError('#login-error', 'Enter your email and password.'); return; }
+  signingIn = true; $('#login-submit').disabled = true; showError('#login-error', '');
+  try {
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) {
+      const m = errText(error);
+      let msg = 'Signing in didn’t work. Check your connection and try again.';
+      if (/not confirmed/i.test(m)) msg = 'This email hasn’t been confirmed yet. In Supabase, open Authentication, then Users, and confirm it.';
+      else if (/invalid login|invalid credentials/i.test(m) || errCode(error) === '400') msg = 'That email and password don’t match. Check them and try again.';
+      showError('#login-error', msg);
+      return;
+    }
+    await refreshOwner();
+    if (!state.owner) {
+      try { await sb.auth.signOut(); } catch (err) {}
+      showError('#login-error', 'This account isn’t set up as the owner of this site.');
+      return;
+    }
+    $('#login-password').value = '';
+    $('#login-dialog').close();
+    render();
+    toast('Signed in');
+  } catch (err) {
+    showError('#login-error', 'Signing in didn’t work. Check your connection and try again.');
+  } finally { signingIn = false; $('#login-submit').disabled = false; }
+}
+async function signOut() {
+  try { await sb.auth.signOut(); } catch (e) {}
+  state.owner = false;
+  render();
+  toast('Signed out');
+}
+$('#login-form').addEventListener('submit', signIn);
+
+/* ---------- start ---------- */
+async function loadPosts() {
+  const { data, error } = await sb.from('posts').select('*');
+  if (error) throw error;
+  state.posts = (data || []).map(rowToSnap).map(normPost).filter(Boolean).sort(byRecent);
+  state.postsState = 'ready';
+}
+async function loadSite() {
+  const { data, error } = await sb.from('site_details').select('*').eq('id', 1).maybeSingle();
+  if (!error && data) state.site = normSite(data);
+}
+async function boot() {
+  $('#foot-year').textContent = THIS_YEAR;
+  render();
+  if (parseRoute().section) { const el = document.getElementById(parseRoute().section); if (el) el.scrollIntoView(); }
+  window.addEventListener('hashchange', onRoute);
+  if (!sb) { state.postsState = configured ? 'error' : 'off'; render(); return; }
+  sb.auth.onAuthStateChange(event => { if (event === 'SIGNED_OUT' && state.owner) { state.owner = false; render(); } });
+  const slow = setTimeout(() => { if (state.postsState === 'loading') { state.postsState = 'slow'; render(); } }, 10000);
+  const [posts] = await Promise.allSettled([loadPosts(), loadSite(), refreshOwner()]);
+  clearTimeout(slow);
+  if (posts.status === 'rejected') state.postsState = 'error';
+  if (state.postsState === 'ready' && state.posts.length) {
+    // the one piece of motion on the page: the arch rises once, when the work first arrives
+    document.body.classList.add('intro');
+    setTimeout(() => document.body.classList.remove('intro'), 1400);
+  }
+  render();
+}
+boot();
+})();
+</script>
+</body>
+</html>
